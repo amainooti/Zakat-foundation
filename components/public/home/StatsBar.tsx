@@ -9,41 +9,55 @@ export default function StatsBar({ settings }: { settings: SiteSettings }) {
   ];
 
   return (
-    <div style={{ background: "#161616", borderTop: "1px solid #1F1F1F", borderBottom: "1px solid #1F1F1F" }}>
-      <div
-        style={{
-          maxWidth: "1200px", margin: "0 auto",
-          padding: "0 clamp(24px, 6vw, 80px)",
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
-      >
-        {stats.map((stat, i) => (
-          <div
-            key={i}
-            style={{
-              padding: "32px 24px",
-              borderRight: i < 3 ? "1px solid #1F1F1F" : "none",
-              textAlign: "center",
-            }}
-          >
-            <p style={{
-              fontFamily: "'DM Mono', monospace",
-              fontSize: "clamp(24px, 3vw, 36px)",
-              fontWeight: 500, color: "#C9952A",
-              marginBottom: "6px", lineHeight: 1,
-            }}>
-              {stat.value}
-            </p>
-            <p style={{
-              fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#4A4540",
-            }}>
-              {stat.label}
-            </p>
-          </div>
-        ))}
+    <>
+      <div style={{ background: "#161616", borderTop: "1px solid #1F1F1F", borderBottom: "1px solid #1F1F1F" }}>
+        <div className="stats-grid">
+          {stats.map((stat, i) => (
+            <div key={i} className="stat-cell" style={{ borderRight: i < 3 ? "1px solid #1F1F1F" : "none" }}>
+              <p style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: "clamp(22px, 3vw, 36px)",
+                fontWeight: 500, color: "#C9952A",
+                marginBottom: "6px", lineHeight: 1,
+              }}>
+                {stat.value}
+              </p>
+              <p style={{
+                fontSize: "11px", fontWeight: 600,
+                letterSpacing: "0.12em", textTransform: "uppercase", color: "#4A4540",
+              }}>
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <style>{`
+        .stats-grid {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 clamp(24px, 6vw, 80px);
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-cell {
+          padding: 32px 20px;
+          text-align: center;
+        }
+        @media (max-width: 768px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .stat-cell:nth-child(2) { border-right: none !important; }
+          .stat-cell:nth-child(3) { border-right: 1px solid #1F1F1F !important; border-top: 1px solid #1F1F1F; }
+          .stat-cell:nth-child(4) { border-top: 1px solid #1F1F1F; }
+        }
+        @media (max-width: 480px) {
+          .stats-grid { grid-template-columns: 1fr 1fr; }
+          .stat-cell { padding: 20px 16px; }
+        }
+      `}</style>
+    </>
   );
 }
