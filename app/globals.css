@@ -1,26 +1,605 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Backgrounds ── */
+  --bg-base:     #0D0D0D;
+  --bg-surface:  #161616;
+  --bg-elevated: #1F1F1F;
+  --bg-border:   #2A2A2A;
+  --bg-hover:    #252525;
+
+  /* ── Accent — warm amber/gold ── */
+  --accent:        #C9952A;
+  --accent-muted:  #7A5A1A;
+  --accent-subtle: rgba(201, 149, 42, 0.08);
+
+  /* ── Semantic ── */
+  --urgent:  #A0412A;
+  --success: #2A7A4A;
+  --warning: #C9952A;
+  --error:   #A0412A;
+
+  /* ── Text ── */
+  --text-primary:   #F0EDE8;
+  --text-secondary: #B8B3AC;
+  --text-muted:     #706B63;
+  --text-inverse:   #0D0D0D;
+
+  /* ── Typography ── */
+  --font-display: "Cormorant Garamond";
+  --font-sans:    "DM Sans";
+  --font-mono:    "DM Mono";
+
+  /* ── Layout ── */
+  --sidebar-width:      240px;
+  --navbar-height:      64px;
+  --content-max-width:  1200px;
+  --section-padding-x:  clamp(1.25rem, 5vw, 5rem);
+  --section-padding-y:  clamp(3rem, 8vw, 7rem);
+
+  /* ── Transitions ── */
+  --transition-fast:   0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   0.4s  cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-dignified: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================================
+   BASE RESET + GLOBAL STYLES
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent);
+  color: var(--text-inverse);
+}
+
+/* ── Focus ring (accessibility) ── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg-base); }
+::-webkit-scrollbar-thumb  { background: var(--bg-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Images ── */
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Links ── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Buttons ── */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+/* ============================================================
+   TYPOGRAPHY SCALE
+   ============================================================ */
+
+/* Display — Cormorant Garamond, used for hero headings */
+.type-display-2xl {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.type-display-xl {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.type-display-lg {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.type-display-md {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.375rem, 2.5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Body — DM Sans */
+.type-body-lg  { font-size: 1.125rem; line-height: 1.7; }
+.type-body     { font-size: 1rem;     line-height: 1.65; }
+.type-body-sm  { font-size: 0.875rem; line-height: 1.6; }
+.type-body-xs  { font-size: 0.75rem;  line-height: 1.5; }
+
+/* Label — uppercase tracking */
+.type-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Mono — DM Mono for amounts/stats */
+.type-mono {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.9em;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+.container-site {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.section-padding {
+  padding-block: var(--section-padding-y);
+}
+
+/* ============================================================
+   COMPONENT BASE STYLES
+   ============================================================ */
+
+/* ── Cards ── */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-border);
+  border-radius: 12px;
+  transition: border-color var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+.card:hover {
+  border-color: #3A3A3A;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.card-elevated {
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  border-radius: 12px;
+}
+
+/* ── Dividers ── */
+.divider {
+  height: 1px;
+  background: var(--bg-border);
+  width: 100%;
+}
+
+/* ── Section label (small gold eyebrow text above headings) ── */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+/* ── Progress bar ── */
+.progress-track {
+  width: 100%;
+  height: 5px;
+  background: var(--bg-elevated);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-muted), var(--accent));
+  border-radius: 999px;
+  width: var(--progress-width, 0%);
+  animation: progress-fill 1.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: 0.3s;
+}
+
+/* ── Skeleton loader ── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-hover)    50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+  border-radius: 6px;
+}
+
+/* ── Overlay gradient (for images) ── */
+.img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13, 13, 13, 0.95) 0%,
+    rgba(13, 13, 13, 0.4)  50%,
+    rgba(13, 13, 13, 0.1)  100%
+  );
+}
+
+.img-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.65);
+}
+
+/* ============================================================
+   ADMIN SPECIFIC
+   ============================================================ */
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.admin-main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .admin-main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+}
+
+/* Admin page header */
+.admin-page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--bg-border);
+}
+
+.admin-page-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.admin-page-subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   SCROLL ANIMATIONS (JS-powered, class toggled on scroll)
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-dignified),
+              transform var(--transition-dignified);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.05s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.12s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.19s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.26s; }
+.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.33s; }
+.reveal-stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
+
+/* ============================================================
+   TIPTAP RICH TEXT RENDERER
+   ============================================================ */
+
+.rich-text {
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4 {
+  font-family: var(--font-display), Georgia, serif;
+  color: var(--text-primary);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.rich-text h1 { font-size: 2rem; }
+.rich-text h2 { font-size: 1.5rem; }
+.rich-text h3 { font-size: 1.25rem; }
+
+.rich-text p  { margin-bottom: 1.25em; }
+
+.rich-text a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-fast);
+}
+
+.rich-text a:hover { opacity: 0.8; }
+
+.rich-text ul,
+.rich-text ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+
+.rich-text li { margin-bottom: 0.4em; }
+
+.rich-text blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25em;
+  margin: 1.5em 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.15em;
+}
+
+.rich-text strong { color: var(--text-primary); font-weight: 600; }
+
+.rich-text img {
+  border-radius: 8px;
+  margin: 1.5em 0;
+  width: 100%;
+  object-fit: cover;
+}
+
+.rich-text hr {
+  border: none;
+  border-top: 1px solid var(--bg-border);
+  margin: 2em 0;
+}
+
+/* ============================================================
+   TIPTAP EDITOR (admin)
+   ============================================================ */
+
+.tiptap-editor {
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--bg-border);
+  background: var(--bg-surface);
+}
+
+.tiptap-toolbar button {
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.tiptap-toolbar button:hover,
+.tiptap-toolbar button.is-active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.tiptap-toolbar button.is-active {
+  color: var(--accent);
+}
+
+.tiptap-content {
+  padding: 1.25rem;
+  min-height: 200px;
+  outline: none;
+}
+
+.tiptap-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  color: var(--text-primary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+}
+.sidebar-toggle:hover  { background: var(--bg-hover); }
+.sidebar-toggle:active { transform: scale(0.93); }
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 149;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.sidebar-backdrop--visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--bg-border);
+  padding: 24px 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* ── Nav items ── */
+.nav-section-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-inline: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: 7px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+}
+.nav-item:hover {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+.nav-item--active {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.nav-item--active .nav-item-icon {
+  color: var(--accent);
+}
+.nav-item-icon {
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+.nav-item-label {
+  line-height: 1;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .sidebar-toggle  { display: flex; }
+  .sidebar-backdrop { display: block; }
+
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+  .sidebar--open {
+    transform: translateX(0);
+    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .admin-main {
+    margin-left: 0 !important;
+    padding-top: 4rem !important;
+  }
+
+  
+/* globals.css */
+.campaign-row { transition: background 0.15s; }
+.campaign-row:hover { background: #1A1A1A; }
+
 }
