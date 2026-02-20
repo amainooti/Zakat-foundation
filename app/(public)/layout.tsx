@@ -1,13 +1,15 @@
-export default function PublicLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { getSiteSettings } from "@/lib/settings";
+import Navbar from "@/components/public/Navbar";
+import Footer from "@/components/public/Footer";
+
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings();
+
   return (
-    <div style={{ minHeight: "100vh", background: "#0D0D0D" }}>
-      {/* Navbar placeholder — Phase 15 */}
-      {children}
-      {/* Footer placeholder — Phase 15 */}
-    </div>
+    <>
+      <Navbar settings={settings} />
+      <div style={{ paddingTop: "64px" }}>{children}</div>
+      <Footer settings={settings} />
+    </>
   );
 }
