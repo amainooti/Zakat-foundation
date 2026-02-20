@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { getSiteSettings } from "@/lib/settings";
 import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@/lib/types/app";
 
@@ -11,7 +10,6 @@ export const metadata = {
 
 export default async function BlogPage() {
   const supabase = await createClient();
-  const settings = await getSiteSettings();
 
   const { data: posts } = await supabase
     .from("blog_posts")
@@ -19,9 +17,9 @@ export default async function BlogPage() {
     .eq("published", true)
     .order("published_at", { ascending: false });
 
-  const heading    = settings.blog_heading    || "News & Stories";
-  const subheading = settings.blog_subheading;
-  const emptyText  = settings.blog_empty_text || "No posts yet. Check back soon.";
+  const heading    = "News & Stories";
+  const subheading = null;
+  const emptyText  = "No posts yet. Check back soon.";
 
   const allPosts = (posts ?? []) as BlogPost[];
 
