@@ -30,7 +30,7 @@ export default function ProgressLogger({ campaignId, contributions }: Props) {
     reset,
     formState: { errors },
   } = useForm<ContributionFormData>({
-    resolver: zodResolver(contributionSchema),
+    resolver: zodResolver(contributionSchema) as any,
     defaultValues: { currency: "USD" },
   });
 

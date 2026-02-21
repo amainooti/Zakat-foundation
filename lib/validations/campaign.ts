@@ -8,7 +8,7 @@ export const campaignSchema = z.object({
   description:   z.string().optional(),
   cover_image:   z.string().optional(),
   location:      z.string().optional(),
-  status:        z.enum(["active", "urgent", "completed", "archived"]),
+  status:        z.enum(["active", "urgent", "completed", "archived"]).default("active"),
   category:      z.string().optional(),
   tags:          z.array(z.string()).default([]),
   target_amount: z.coerce.number().positive("Target amount must be greater than 0"),

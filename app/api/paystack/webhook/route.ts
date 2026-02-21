@@ -44,10 +44,10 @@ export async function POST(request: NextRequest) {
 
     const reference  = data.reference;
     const ngnAmount  = fromPaystackAmount(data.amount);
-    const amount     = (meta?.original_amount as number) ?? ngnAmount;
-    const currency   = (meta?.original_currency as string) ?? data.currency;
-    const email      = data.customer.email;
     const meta       = data.metadata ?? {};
+    const amount     = (meta as Record<string, unknown>).original_amount as number ?? ngnAmount;
+    const currency   = (meta as Record<string, unknown>).original_currency as string ?? data.currency;
+    const email      = data.customer.email;
     const donorName  = meta.donor_name
       ?? [data.customer.first_name, data.customer.last_name].filter(Boolean).join(" ")
       ?? null;
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
         is_recurring:      isRecurring,
         status:            "completed",
         newsletter_opt_in: newsletterOptIn,
-        metadata:          data as unknown as Record<string, unknown>,
+        metadata:          JSON.parse(JSON.stringify(data)),
       })
       .select()
       .single();

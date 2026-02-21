@@ -38,7 +38,7 @@ export default function CampaignForm({ campaign }: Props) {
     setValue,
     formState: { errors },
   } = useForm<CampaignFormData>({
-    resolver: zodResolver(campaignSchema),
+    resolver: zodResolver(campaignSchema) as any,
     defaultValues: isEdit ? {
       title:         campaign.title,
       slug:          campaign.slug,
@@ -46,7 +46,7 @@ export default function CampaignForm({ campaign }: Props) {
       description:   campaign.description   ?? "",
       cover_image:   campaign.cover_image   ?? "",
       location:      campaign.location      ?? "",
-      status:        campaign.status,
+      status:        campaign.status as "active" | "urgent" | "completed" | "archived",
       category:      campaign.category      ?? "",
       tags:          campaign.tags          ?? [],
       target_amount: campaign.target_amount,

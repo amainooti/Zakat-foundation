@@ -40,7 +40,7 @@ export default function BlogEditor({ post }: Props) {
   const [tagInput, setTagInput] = useState("");
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<BlogPostFormData>({
-    resolver: zodResolver(blogPostSchema),
+    resolver: zodResolver(blogPostSchema) as any,
     defaultValues: isEdit ? {
       title: post.title, slug: post.slug, excerpt: post.excerpt ?? "",
       content: post.content ?? "", cover_image: post.cover_image ?? "",
@@ -51,7 +51,6 @@ export default function BlogEditor({ post }: Props) {
   const tags = watch("tags") ?? [];
 
   const editor = useEditor({
-    immediatelyRender: false, // ← important for performance, especially with many posts
     extensions: [
       StarterKit,
       TiptapImage,
