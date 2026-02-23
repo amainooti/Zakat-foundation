@@ -3,7 +3,7 @@ import { Resend } from "resend";
 // ── Resend instance — server-side only ────────────────────────
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = process.env.RESEND_FROM_EMAIL ?? "giving@zakatfoundation.org";
+const FROM = process.env.RESEND_FROM_EMAIL ?? "donation@globalheartsinitiative.org";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 // ── Send donation receipt ─────────────────────────────────────
