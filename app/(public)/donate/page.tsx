@@ -4,8 +4,8 @@ import DonationForm from "@/components/public/DonationForm";
 import type { Campaign } from "@/lib/types/app";
 
 export const metadata = {
-  title: "Donate — Zakat Foundation of America",
-  description: "Your generosity changes lives. Donate to Zakat Foundation of America.",
+  title: "Donate — Global hearts Initiative",
+  description: "Your generosity changes lives. Donate to Global Hearts.",
 };
 
 export default async function DonatePage() {

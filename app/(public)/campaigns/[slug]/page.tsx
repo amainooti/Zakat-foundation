@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { data }  = await supabase.from("campaigns").select("title, description").eq("slug", slug).single();
   if (!data) return {};
   return {
-    title: `${data.title} — Zakat Foundation of America`,
+    title: `${data.title} — Global Hearts Initiative  `,
     description: data.description?.replace(/<[^>]+>/g, "").slice(0, 160),
   };
 }

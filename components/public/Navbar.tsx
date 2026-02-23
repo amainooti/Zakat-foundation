@@ -27,7 +27,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
   const ctaLabel = settings.nav_cta_label || "Donate Now";
   const ctaHref  = settings.nav_cta_href  || "/donate";
-  const siteName = settings.site_name     || "Zakat Foundation";
+  const siteName = settings.site_name     || "Global Hearts Initiative";
   const logoUrl  = settings.logo_url;
 
   return (

@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
         <div className="flex items-center gap-3 mb-10">
           <Image
             src="/zakat_logo.png"
-            alt="Zakat Foundation of America"
+            alt="Global Hearts Initiative Logo"
             width={200}
             height={100}
             className="object-contain"
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="admin@zakatfoundation.org"
+                      placeholder="admin@globalheartsinitiaive.org"
                       required
                       autoComplete="email"
                       className="w-full rounded-lg text-sm outline-none transition-all"

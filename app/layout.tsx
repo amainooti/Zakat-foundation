@@ -28,8 +28,8 @@ const dmMono = DM_Mono({
 /* ── Metadata ────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   title: {
-    default: "Zakat Foundation of America",
-    template: "%s | Zakat Foundation of America",
+    default: "Global Hearts Initiative",
+    template: "%s | Global Hearts Initiative",
   },
   description:
     "Providing humanitarian aid, relief, and hope to those displaced and affected by conflict worldwide.",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Zakat Foundation of America",
+    siteName: "Global Hearts Initiative",
   },
 };
 

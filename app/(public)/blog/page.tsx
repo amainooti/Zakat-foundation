@@ -5,7 +5,7 @@ import type { BlogPost } from "@/lib/types/app";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Blog — Zakat Foundation of America",
+  title: "Blog — Global hearts Initiative",
 };
 
 export default async function BlogPage() {

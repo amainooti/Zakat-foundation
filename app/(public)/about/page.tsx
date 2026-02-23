@@ -6,7 +6,7 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    title: `${settings.about_heading || "About"} — Zakat Foundation of America`,
+    title: `${settings.about_heading || "About"} — Global Hearts Initiative`,
   };
 }
 

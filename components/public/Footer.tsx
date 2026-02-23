@@ -9,7 +9,7 @@ const NAV_LINKS = [
 ];
 
 export default function Footer({ settings }: { settings: SiteSettings }) {
-  const siteName = settings.site_name      || "Zakat Foundation of America";
+  const siteName = settings.site_name      || "Global Hearts Initiative";
   const tagline  = settings.footer_tagline || "Giving Where It's Needed Most";
   const address  = settings.footer_address;
   const email    = settings.footer_email;

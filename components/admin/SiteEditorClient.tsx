@@ -30,7 +30,7 @@ const TABS: TabDef[] = [
       {
         heading: "Site Identity",
         fields: [
-          { key: "site_name",   label: "Site Name",   type: "text", placeholder: "Zakat Foundation of America" },
+          { key: "site_name",   label: "Site Name",   type: "text", placeholder: "Global Hearts Initiative" },
           { key: "logo_url",    label: "Logo URL",    type: "url",  hint: "Paste a URL from the Media Library" },
           { key: "favicon_url", label: "Favicon URL", type: "url",  hint: "32×32px .ico or .png" },
         ],

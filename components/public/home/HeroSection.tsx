@@ -11,7 +11,7 @@ export default function HeroSection({ settings }: { settings: SiteSettings }) {
     return () => clearTimeout(t);
   }, []);
 
-  const siteName = settings.site_name     || "Zakat Foundation of America";
+  const siteName = settings.site_name     || "Global Hearts Initiative";
   const ctaImage = settings.home_cta_image;
   const ctaLabel = settings.home_cta_button_label || "Donate Now";
   const ctaHref  = settings.home_cta_button_href  || "/donate";

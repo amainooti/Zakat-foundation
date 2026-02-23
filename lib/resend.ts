@@ -60,7 +60,7 @@ export async function sendDonationReceipt(params: {
           <tr>
             <td style="background:#1F1F1F;padding:28px 36px;border-bottom:1px solid #2A2A2A;">
               <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#C9952A;">
-                Zakat Foundation of America
+                Global Hearts Initiative
               </p>
             </td>
           </tr>
@@ -102,7 +102,7 @@ export async function sendDonationReceipt(params: {
           <tr>
             <td style="padding:20px 36px;border-top:1px solid #2A2A2A;">
               <p style="margin:0;font-size:12px;color:#706B63;line-height:1.6;">
-                Zakat Foundation of America · Questions? Reply to this email or contact us at
+                Global Hearts Initiative · Questions? Reply to this email or contact us at
                 <a href="mailto:${FROM}" style="color:#C9952A;">${FROM}</a>
               </p>
             </td>
@@ -116,9 +116,9 @@ export async function sendDonationReceipt(params: {
 </html>`;
 
   return resend.emails.send({
-    from:    `Zakat Foundation <${FROM}>`,
+    from:    `Global Hearts Initiative <${FROM}>`,
     to,
-    subject: `Donation receipt — ${formattedAmount} · Zakat Foundation of America`,
+    subject: `Donation receipt — ${formattedAmount} · Global Hearts Initiative`,
     html,
   });
 }
@@ -135,7 +135,7 @@ export async function sendNewsletter(params: {
 
   for (const chunk of chunks) {
     const result = await resend.emails.send({
-      from:    `Zakat Foundation <${FROM}>`,
+      from:    `Global Hearts Initiative <${FROM}>`,
       to:      chunk,
       subject: params.subject,
       html:    params.html,

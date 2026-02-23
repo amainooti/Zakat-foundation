@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .single();
   if (!data) return {};
   return {
-    title: `${data.title} — Zakat Foundation of America`,
+    title: `${data.title} — Global hearts Initiative`,
     description: data.excerpt ?? undefined,
   };
 }
