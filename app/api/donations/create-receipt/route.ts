@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       currency,
       txHash,
       campaignTitle: campaignTitle ?? null,
-      campaignSlug:  campaignSlug  ?? null,
+      // campaignSlug:  campaignSlug  ?? null,
       isRecurring:   isRecurring   ?? false,
     });
 

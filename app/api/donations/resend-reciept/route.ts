@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       currency:      donation.currency,
       txHash:        donation.paystack_ref,
       campaignTitle: donation.campaigns?.title ?? null,
-      campaignSlug:  donation.campaigns?.slug  ?? null,
+      // campaignSlug:  donation.campaigns?.slug  ?? null,
       isRecurring:   donation.is_recurring,
     });
 
